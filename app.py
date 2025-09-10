@@ -299,7 +299,7 @@ elif menu == "🏗️ Debêntures Incentivadas e de Infraestrutura":
 # Página: Dados
 # ------------------
 elif menu == "📊 Dados":
-    st.subheader("📊 Base de dados (exemplo fictício) - PRECISAMOS DEFINIR QUAIS COLUNAS COLOCAR NA TABELA")
+    st.subheader("📊 Base de dados (exemplo fictício) - PRECISAMOS DEFINIR QUAIS COLUNAS COLOCAR NA TABELA----MOSTRAR ULTIMAS EMISSÕES? EMISSOES DA ULTIMA SEMANA?")
     df = pd.DataFrame({
         "Código": ["DBINFRA-001","DBINC-2024A","DBSUST-EL-15"],
         "Emissor": ["Rodovias BR S.A.","Saneamento Sul S.A.","Energia Limpa S.A."],
