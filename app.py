@@ -38,7 +38,8 @@ menu = st.sidebar.radio(
         "ℹ️ Informações sobre o Painel",
         "🏗️ Debêntures Incentivadas e de Infraestrutura",
         "📊 Dados",
-        "📈 Análise"
+        "📈 Análise",
+        "🌱 Debêntures Sustentáveis"
     ]
 )
 
