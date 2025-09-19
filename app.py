@@ -337,27 +337,65 @@ elif menu == "📈 Análise":
     # gráfico de pizza
     fig2 = px.pie(df, names="Rating", values="Valor de Mercado (R$ mi)", title="Distribuição por Rating")
     st.plotly_chart(fig2, use_container_width=True)
+
 elif menu == "🌱 Debêntures Sustentáveis":
     st.subheader("🌱 Debêntures Sustentáveis")
 
+    # =========================
+    # Texto explicativo
+    # =========================
     st.markdown("""
-    As **Debêntures Sustentáveis** representam uma evolução no mercado de capitais, 
-    alinhando a captação de recursos à **agenda ESG** (Ambiental, Social e Governança).  
+    ### A Retomada da Agenda de Sustentabilidade e o Mercado de Capitais
 
-    ### Características principais:
-    - Financiamento de projetos com impacto **ambiental positivo** (energia renovável, saneamento, mobilidade limpa, etc.).  
-    - Transparência quanto ao **uso dos recursos captados**.  
-    - Podem ser enquadradas como **Green Bonds**, **Social Bonds** ou **Sustainability-Linked Bonds**.  
+    No Brasil, a priorização da agenda de clima e sustentabilidade foi retomada a partir de 2023. 
+    No Ministério da Fazenda (MF), a criação do **Plano de Transformação Ecológica (PTE)** tem promovido 
+    o financiamento climático, sobretudo por meio da mobilização de capital privado.  
 
-    ### Diferenciais:
-    - Contribuem para os **Objetivos de Desenvolvimento Sustentável (ODS)**.  
-    - Atraem investidores interessados em **finanças verdes**.  
-    - Fortalecem o compromisso socioambiental das empresas emissoras.  
+    No eixo das **finanças sustentáveis**, o PTE tem promovido iniciativas como:  
+    - emissões de **Títulos Soberanos Sustentáveis**  
+    - a **Taxonomia Sustentável Brasileira**  
+    - o **EcoInvest**  
+    - o **Sistema Brasileiro de Comércio de Emissões**, entre outras.  
+
+    Nesse cenário dinâmico, o mercado de capitais desempenha um papel fundamental. 
+    A regulamentação da **Lei nº 14.801/2024**, por exemplo, foi um passo estratégico 
+    para estimular o uso de debêntures no financiamento de projetos de infraestrutura considerados prioritários.  
+
+    O **Decreto nº 11.964/2024** estabeleceu um regulamento unificado para as Leis 12.431/2011 e 14.801/2024, 
+    aprimorando o uso de instrumentos econômicos orientados para a sustentabilidade, com destaque para 
+    o financiamento de infraestrutura por meio de títulos de dívida.  
     """)
 
-    # -----------------------------
+    st.markdown("""
+    ### Regras e Conformidade ESG
+
+    As **debêntures sustentáveis** representam um segmento crescente no mercado brasileiro, 
+    refletindo a demanda por investimentos alinhados aos princípios de **ESG (Ambiental, Social e Governança)**.  
+
+    - Um título é considerado sustentável, conforme o **Código de Ofertas Públicas da ANBIMA**, 
+      se possuir estrutura que o qualifique como **verde, social, de sustentabilidade ou vinculado a metas**.  
+    - A estruturação exige observância à **Resolução CVM nº 160/2022** e ao **Código da ANBIMA**, 
+      com a apresentação de um **framework de finanças sustentáveis**.  
+    - Esse framework deve detalhar: critérios de elegibilidade, metodologia de seleção, 
+      controle da alocação dos recursos e mensuração dos impactos.  
+    - A **Second Party Opinion (SPO)** é recomendada para reforçar credibilidade.  
+
+    Complementarmente, a publicidade e materiais promocionais devem estar alinhados aos documentos oficiais da oferta. 
+    O descumprimento pode gerar sanções e danos reputacionais.  
+
+    A harmonização entre **CVM, ANBIMA e padrões internacionais** fortalece a posição do Brasil na 
+    **economia de baixo carbono**, enquanto a futura **Taxonomia Sustentável Brasileira (TSB)** 
+    trará ainda mais clareza e integridade à classificação de ativos.  
+    """)
+
+    st.markdown("""
+    ---
+    ## 📊 Visualização Interativa de Debêntures Sustentáveis
+    """)
+
+    # =========================
     # Base de dados fictícia
-    # -----------------------------
+    # =========================
     df_sust = pd.DataFrame({
         "Código": ["DBSUST-EL-15", "DBSUST-SAN-09", "DBSUST-MOB-07", "DBSUST-EDU-03"],
         "Emissor": ["Energia Limpa S.A.", "Saneamento Verde S.A.", "Mobilidade Sustentável Ltda.", "Educação Futuro"],
@@ -371,9 +409,9 @@ elif menu == "🌱 Debêntures Sustentáveis":
         ]
     })
 
-    # -----------------------------
+    # =========================
     # Filtros interativos
-    # -----------------------------
+    # =========================
     col1, col2 = st.columns(2)
 
     with col1:
@@ -390,24 +428,22 @@ elif menu == "🌱 Debêntures Sustentáveis":
             default=df_sust["ODS Relacionado"].unique()
         )
 
-    # Aplica filtros
     df_filtrado = df_sust[
         (df_sust["Setor"].isin(setor_sel)) & 
         (df_sust["ODS Relacionado"].isin(ods_sel))
     ]
 
-    # -----------------------------
-    # Exibição da Tabela
-    # -----------------------------
+    # =========================
+    # Tabela filtrada
+    # =========================
     st.markdown("### 📋 Tabela de Debêntures Sustentáveis (filtrada)")
     st.dataframe(df_filtrado, use_container_width=True, hide_index=True)
 
-    # -----------------------------
-    # Gráficos Dinâmicos
-    # -----------------------------
-    st.markdown("### 📊 Visualizações")
+    # =========================
+    # Gráficos
+    # =========================
+    st.markdown("### 📈 Análises gráficas")
 
-    # Gráfico de barras por emissor
     fig_bar = px.bar(
         df_filtrado, 
         x="Emissor", 
@@ -417,7 +453,6 @@ elif menu == "🌱 Debêntures Sustentáveis":
     )
     st.plotly_chart(fig_bar, use_container_width=True)
 
-    # Gráfico de pizza por ODS
     fig_pie = px.pie(
         df_filtrado, 
         names="ODS Relacionado", 
@@ -426,9 +461,9 @@ elif menu == "🌱 Debêntures Sustentáveis":
     )
     st.plotly_chart(fig_pie, use_container_width=True)
 
-    # -----------------------------
+    # =========================
     # Download CSV
-    # -----------------------------
+    # =========================
     csv = df_filtrado.to_csv(index=False).encode("utf-8-sig")
     st.download_button(
         "📥 Baixar tabela filtrada (CSV)", 
