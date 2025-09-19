@@ -337,3 +337,102 @@ elif menu == "📈 Análise":
     # gráfico de pizza
     fig2 = px.pie(df, names="Rating", values="Valor de Mercado (R$ mi)", title="Distribuição por Rating")
     st.plotly_chart(fig2, use_container_width=True)
+elif menu == "🌱 Debêntures Sustentáveis":
+    st.subheader("🌱 Debêntures Sustentáveis")
+
+    st.markdown("""
+    As **Debêntures Sustentáveis** representam uma evolução no mercado de capitais, 
+    alinhando a captação de recursos à **agenda ESG** (Ambiental, Social e Governança).  
+
+    ### Características principais:
+    - Financiamento de projetos com impacto **ambiental positivo** (energia renovável, saneamento, mobilidade limpa, etc.).  
+    - Transparência quanto ao **uso dos recursos captados**.  
+    - Podem ser enquadradas como **Green Bonds**, **Social Bonds** ou **Sustainability-Linked Bonds**.  
+
+    ### Diferenciais:
+    - Contribuem para os **Objetivos de Desenvolvimento Sustentável (ODS)**.  
+    - Atraem investidores interessados em **finanças verdes**.  
+    - Fortalecem o compromisso socioambiental das empresas emissoras.  
+    """)
+
+    # -----------------------------
+    # Base de dados fictícia
+    # -----------------------------
+    df_sust = pd.DataFrame({
+        "Código": ["DBSUST-EL-15", "DBSUST-SAN-09", "DBSUST-MOB-07", "DBSUST-EDU-03"],
+        "Emissor": ["Energia Limpa S.A.", "Saneamento Verde S.A.", "Mobilidade Sustentável Ltda.", "Educação Futuro"],
+        "Setor": ["Energia Renovável", "Saneamento Básico", "Mobilidade Urbana", "Educação Pública"],
+        "Valor de Mercado (R$ mi)": [560, 310, 220, 150],
+        "ODS Relacionado": [
+            "ODS 7 - Energia Limpa",
+            "ODS 6 - Água Potável e Saneamento",
+            "ODS 11 - Cidades Sustentáveis",
+            "ODS 4 - Educação de Qualidade"
+        ]
+    })
+
+    # -----------------------------
+    # Filtros interativos
+    # -----------------------------
+    col1, col2 = st.columns(2)
+
+    with col1:
+        setor_sel = st.multiselect(
+            "🔍 Filtrar por Setor",
+            options=df_sust["Setor"].unique(),
+            default=df_sust["Setor"].unique()
+        )
+
+    with col2:
+        ods_sel = st.multiselect(
+            "🌍 Filtrar por ODS",
+            options=df_sust["ODS Relacionado"].unique(),
+            default=df_sust["ODS Relacionado"].unique()
+        )
+
+    # Aplica filtros
+    df_filtrado = df_sust[
+        (df_sust["Setor"].isin(setor_sel)) & 
+        (df_sust["ODS Relacionado"].isin(ods_sel))
+    ]
+
+    # -----------------------------
+    # Exibição da Tabela
+    # -----------------------------
+    st.markdown("### 📋 Tabela de Debêntures Sustentáveis (filtrada)")
+    st.dataframe(df_filtrado, use_container_width=True, hide_index=True)
+
+    # -----------------------------
+    # Gráficos Dinâmicos
+    # -----------------------------
+    st.markdown("### 📊 Visualizações")
+
+    # Gráfico de barras por emissor
+    fig_bar = px.bar(
+        df_filtrado, 
+        x="Emissor", 
+        y="Valor de Mercado (R$ mi)", 
+        color="Setor",
+        title="Valor de Mercado por Emissor (Filtrado)"
+    )
+    st.plotly_chart(fig_bar, use_container_width=True)
+
+    # Gráfico de pizza por ODS
+    fig_pie = px.pie(
+        df_filtrado, 
+        names="ODS Relacionado", 
+        values="Valor de Mercado (R$ mi)", 
+        title="Distribuição por ODS"
+    )
+    st.plotly_chart(fig_pie, use_container_width=True)
+
+    # -----------------------------
+    # Download CSV
+    # -----------------------------
+    csv = df_filtrado.to_csv(index=False).encode("utf-8-sig")
+    st.download_button(
+        "📥 Baixar tabela filtrada (CSV)", 
+        data=csv, 
+        file_name="debentures_sustentaveis_filtradas.csv", 
+        mime="text/csv"
+    )
